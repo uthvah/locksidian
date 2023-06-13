@@ -5,6 +5,16 @@ div.password-prompt-container {
   align-items: center;
   justify-content: center;
   height: 100%;
+  background-image: url('path/to/background-image.jpg'); /* Replace with the path to your background image */
+  background-size: cover;
+  background-position: center;
+}
+
+.password-prompt-content-container {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .password-prompt-heading {
@@ -28,4 +38,6 @@ div.password-prompt-container {
   background-color: #555;
   color: #F7E6C4;
   border: none;
-  border-radius: 4
+  border-radius: 4px;
+}
+

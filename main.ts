@@ -1,20 +1,28 @@
-import { App, Modal, Notice, Plugin } from 'obsidian';
+import { App, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
 
 export default class PasswordPromptPlugin extends Plugin {
+  settings: PasswordPromptSettings;
+
   async onload() {
     console.log('Loading Password Prompt plugin');
 
-    // Open the password prompt on app boot
-    this.app.workspace.on('layout-ready', () => {
-      this.openPasswordPrompt();
-    });
+    await this.loadSettings();
+
+    // Open the password prompt on app boot if password protection is enabled
+    if (this.settings.enablePassword) {
+      this.app.workspace.on('layout-ready', () => {
+        this.openPasswordPrompt();
+      });
+    }
+
+    this.addSettingTab(new PasswordPromptSettingsTab(this.app, this));
   }
 
   openPasswordPrompt() {
-    const modal = new PasswordPromptModal(this.app);
+    const modal = new PasswordPromptModal(this.app, this.settings.password);
 
     const checkPassword = (password) => {
-      if (password === '123098') {
+      if (password === this.settings.password) {
         // Perform actions when the correct password is entered
         new Notice('Password correct!');
         // You can unlock access to the vault here
@@ -29,19 +37,38 @@ export default class PasswordPromptPlugin extends Plugin {
 
     modal.open().then(checkPassword);
   }
+
+  async loadSettings() {
+    this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+  }
+
+  async saveSettings() {
+    await this.saveData(this.settings);
+  }
 }
 
+interface PasswordPromptSettings {
+  enablePassword: boolean;
+  password: string;
+}
+
+const DEFAULT_SETTINGS: PasswordPromptSettings = {
+  enablePassword: true,
+  password: 'password123',
+};
+
 class PasswordPromptModal extends Modal {
-  constructor(app) {
+  constructor(app, password) {
     super(app);
     this.preventClose = true; // Prevent closing the modal without entering a password
+    this.password = password;
   }
 
   onOpen() {
     let { contentEl } = this;
     contentEl.addClass('password-prompt-container');
 
-    let headingEl = contentEl.createEl('h3', { text: 'Enter your password', cls: 'password-prompt-heading' });
+    let headingEl = contentEl.createEl('h3', { text: 'Vault Locked', cls: 'password-prompt-heading' });
     let inputEl = contentEl.createEl('input', { type: 'password', cls: 'password-prompt-input' });
     let buttonEl = contentEl.createEl('button', { text: 'Submit', cls: 'password-prompt-button' });
 
@@ -62,11 +89,12 @@ class PasswordPromptModal extends Modal {
     });
 
     inputEl.focus();
+    inputEl.placeholder = 'Enter your password';
   }
 
   onClose() {
     if (this.preventClose) {
-      modal.open().then(checkPassword); // Prompt the user to enter the password again
+      this.open().then(this.callback); // Prompt the user to enter the password again
     } else {
       let { contentEl } = this;
       contentEl.empty();
@@ -79,5 +107,47 @@ class PasswordPromptModal extends Modal {
       this.preventClose = true; // Reset preventClose flag before opening
       super.open();
     });
+  }
+}
+
+class PasswordPromptSettingsTab extends PluginSettingTab {
+  plugin: PasswordPromptPlugin;
+
+  constructor(app: App, plugin: PasswordPromptPlugin) {
+    super(app, plugin);
+    this.plugin = plugin;
+  }
+
+  display() {
+    let { containerEl } = this;
+
+    containerEl.empty();
+
+    containerEl.createEl('h2', { text: 'Locksidian Settings' });
+
+    new Setting(containerEl)
+      .setName('Enable Password')
+      .setDesc('Toggle password protection for the vault.')
+      .addToggle((toggle) =>
+        toggle
+          .setValue(this.plugin.settings.enablePassword)
+          .onChange(async (value) => {
+            this.plugin.settings.enablePassword = value;
+            await this.plugin.saveSettings();
+          })
+      );
+
+    new Setting(containerEl)
+      .setName('Password')
+      .setDesc('Enter the password to access the vault.')
+      .addText((text) =>
+        text
+          .setPlaceholder('Enter password')
+          .setValue(this.plugin.settings.password)
+          .onChange(async (value) => {
+            this.plugin.settings.password = value;
+            await this.plugin.saveSettings();
+          })
+      );
   }
 }

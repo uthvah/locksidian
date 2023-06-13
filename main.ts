@@ -94,7 +94,7 @@ class PasswordPromptModal extends Modal {
 
   onClose() {
     if (this.preventClose) {
-      this.open().then(this.callback); // Prompt the user to enter the password again
+      modal.open().then(checkPassword); // Prompt the user to enter the password again
     } else {
       let { contentEl } = this;
       contentEl.empty();

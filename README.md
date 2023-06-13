@@ -26,8 +26,8 @@ Locksidian is an add-on for the Obsidian note-taking app that adds a password pr
 Currently, Locksidian uses a hardcoded password for demonstration purposes. To change the password:
 
 1. Open the `main.ts` file in the Locksidian source code.
-2. Locate the line that says `const correctPassword = 'YOUR_CORRECT_PASSWORD';`.
-3. Replace `'YOUR_CORRECT_PASSWORD'` with your desired password.
+2. Locate the line that says `const correctPassword = '123098';`.
+3. Replace `'123098'` with your desired password.
 
 ## Development
 

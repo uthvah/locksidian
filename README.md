@@ -9,10 +9,11 @@ Locksidian is an add-on for the Obsidian note-taking app that adds a password pr
 1. Download the latest release of the Locksidian add-on from the [Releases](https://github.com/SineCrepusculum/locksidian/releases) page.
 2. In Obsidian, go to **Settings > Third-party Plugins**.
 3. Enable **Community Plugins** if you haven't already.
-4. Click on **Open folder for community plugins**.
-5. Extract the downloaded ZIP file into the community plugins folder.
-6. Restart Obsidian.
-7. Locksidian should now appear in the list of installed plugins in the Obsidian settings.
+4. Open the folder for community plugins.
+5. Create a new folder inside called 'locksidian'
+6. Copy the 3 downloaded file into the folder.
+7. Restart Obsidian.
+8. Locksidian should now appear in the list of installed plugins in the Obsidian settings.
 
 ## Usage
 
@@ -23,10 +24,10 @@ Locksidian is an add-on for the Obsidian note-taking app that adds a password pr
 
 ## Configuration
 
-Currently, Locksidian uses a hardcoded password for demonstration purposes. To change the password:
+Currently, Locksidian uses a hardcoded password ('password123') for demonstration purposes. To change the password:
 
-1. Open the `main.ts` file in the Locksidian source code.
-2. Locate the line that says `const correctPassword = '123098';`.
+1. Open the Obsidian settings for Locksidian
+2. Locate the 'Password' section
 3. Replace `'123098'` with your desired password.
 
 ## Development

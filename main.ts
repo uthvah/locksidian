@@ -123,8 +123,6 @@ class PasswordPromptSettingsTab extends PluginSettingTab {
 
     containerEl.empty();
 
-    containerEl.createEl('h2', { text: 'Locksidian Settings' });
-
     new Setting(containerEl)
       .setName('Enable Password')
       .setDesc('Toggle password protection for the vault.')

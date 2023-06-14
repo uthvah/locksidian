@@ -3,9 +3,8 @@
 	"name": "Locksidian",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "A plugin that adds in-app password protection to your vault.",
+	"description": "In-app password protection for your vault.",
 	"author": "Janus",
-	"authorUrl": "",
-	"fundingUrl": "",
+	"authorUrl": "https://github.com/SineCrepusculum",
 	"isDesktopOnly": true
 }

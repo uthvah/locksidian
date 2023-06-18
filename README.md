@@ -1,6 +1,6 @@
 # Locksidian
 
-Locksidian is an add-on for the Obsidian note-taking app that adds a password prompt when entering your vault.
+Locksidian is an add-on for the Obsidian note-taking app that adds a password prompt when entering your vault. You can find my blog post on it [here](https://uthvah.substack.com/p/locksidian-enhancing-note-security).
 
 **This plugin does NOT add local file protection**
 

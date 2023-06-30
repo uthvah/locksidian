@@ -1,41 +1,98 @@
-import { App, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import { App, Modal, Notice, Plugin, PluginSettingTab, Setting, ToggleComponent } from 'obsidian';
 
-export default class PasswordPromptPlugin extends Plugin {
-  settings: PasswordPromptSettings;
+export default class ObsidianLockPlugin extends Plugin {
+  settings: ObsidianLockSettings;
+  lockScreen: HTMLDivElement | null = null;
 
   async onload() {
-    console.log('Loading Password Prompt plugin');
+    console.log('Loading ObsidianLock plugin');
 
     await this.loadSettings();
 
-    // Open the password prompt on app boot if password protection is enabled
-    if (this.settings.enablePassword) {
+    // Open the lock screen on app boot if enabled
+    if (this.settings.enableLockScreen) {
       this.app.workspace.on('layout-ready', () => {
-        this.openPasswordPrompt();
+        this.showLockScreen();
       });
     }
 
-    this.addSettingTab(new PasswordPromptSettingsTab(this.app, this));
+    this.addSettingTab(new ObsidianLockSettingsTab(this.app, this));
+    this.addCommand({
+      id: 'lock-vault',
+      name: 'Lock Vault',
+      callback: () => {
+        this.showLockScreen();
+      },
+    });
+    this.addRibbonIcon('lock', 'Lock Vault', () => {
+      this.showLockScreen();
+    });
   }
 
-  openPasswordPrompt() {
-    const modal = new PasswordPromptModal(this.app, this.settings.password);
+  showLockScreen() {
+    if (this.lockScreen) return; // Prevent creating multiple lock screens
 
-    const checkPassword = (password) => {
-      if (password === this.settings.password) {
-        // Perform actions when the correct password is entered
-        new Notice('Password correct!');
-        // You can unlock access to the vault here
-        // Remove the password prompt modal if needed
-        modal.close();
-      } else {
-        new Notice('Incorrect password!');
-        // Prompt the user to enter the password again
-        modal.open().then(checkPassword);
+    this.lockScreen = document.createElement('div');
+    this.lockScreen.classList.add('obsidian-lock-screen');
+
+    const appContainer = document.querySelector('.app-container');
+    if (appContainer) {
+      appContainer.appendChild(this.lockScreen);
+    }
+
+    const videoEl = document.createElement('video');
+    videoEl.src = 'https://raw.githubusercontent.com/SineCrepusculum/locksidian/main/bg.mp4';
+    videoEl.loop = true;
+    videoEl.muted = true;
+    videoEl.autoplay = true;
+    videoEl.classList.add('obsidian-lock-video');
+
+    const overlay = document.createElement('div');
+    overlay.classList.add('obsidian-lock-overlay');
+  
+    const usernameLabel = document.createElement('div');
+    usernameLabel.textContent = this.settings.username;
+    usernameLabel.classList.add('obsidian-lock-username');
+
+    const passwordInput = document.createElement('input');
+    passwordInput.type = 'password';
+    passwordInput.placeholder = 'Enter password';
+    passwordInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        if (this.validateCredentials(passwordInput.value)) {
+          this.unlockVault();
+        } else {
+          this.showInvalidCredentialsMessage(passwordInput);
+        }
       }
-    };
+    });
 
-    modal.open().then(checkPassword);
+    this.lockScreen.appendChild(videoEl);
+    this.lockScreen.appendChild(overlay);
+    this.lockScreen.appendChild(usernameLabel);
+    this.lockScreen.appendChild(passwordInput);
+
+    passwordInput.focus();
+  }
+
+  unlockVault() {
+    if (this.lockScreen) {
+      this.lockScreen.remove();
+      this.lockScreen = null;
+    }
+  }
+
+  validateCredentials(password: string): boolean {
+    return password === this.settings.password;
+  }
+
+  showInvalidCredentialsMessage(passwordInput: HTMLInputElement) {
+    passwordInput.classList.add('obsidian-lock-input-error');
+    passwordInput.value = '';
+    passwordInput.focus();
+    setTimeout(() => {
+      passwordInput.classList.remove('obsidian-lock-input-error');
+    }, 500);
   }
 
   async loadSettings() {
@@ -47,73 +104,22 @@ export default class PasswordPromptPlugin extends Plugin {
   }
 }
 
-interface PasswordPromptSettings {
-  enablePassword: boolean;
+interface ObsidianLockSettings {
+  enableLockScreen: boolean;
+  username: string;
   password: string;
 }
 
-const DEFAULT_SETTINGS: PasswordPromptSettings = {
-  enablePassword: true,
-  password: 'password123',
+const DEFAULT_SETTINGS: ObsidianLockSettings = {
+  enableLockScreen: true,
+  username: 'User',
+  password: 'password',
 };
 
-class PasswordPromptModal extends Modal {
-  constructor(app, password) {
-    super(app);
-    this.preventClose = true; // Prevent closing the modal without entering a password
-    this.password = password;
-  }
+class ObsidianLockSettingsTab extends PluginSettingTab {
+  plugin: ObsidianLockPlugin;
 
-  onOpen() {
-    let { contentEl } = this;
-    contentEl.addClass('password-prompt-container');
-
-    let headingEl = contentEl.createEl('h3', { text: 'Vault Locked', cls: 'password-prompt-heading' });
-    let inputEl = contentEl.createEl('input', { type: 'password', cls: 'password-prompt-input' });
-    let buttonEl = contentEl.createEl('button', { text: 'Submit', cls: 'password-prompt-button' });
-
-    const submitPassword = () => {
-      const password = inputEl.value;
-      if (password) {
-        this.preventClose = false; // Allow closing the modal after a password is entered
-        this.close();
-        this.callback(password);
-      }
-    };
-
-    buttonEl.addEventListener('click', submitPassword);
-    inputEl.addEventListener('keypress', (event) => {
-      if (event.key === 'Enter') {
-        submitPassword();
-      }
-    });
-
-    inputEl.focus();
-    inputEl.placeholder = 'Enter your password';
-  }
-
-  onClose() {
-    if (this.preventClose) {
-      modal.open().then(checkPassword); // Prompt the user to enter the password again
-    } else {
-      let { contentEl } = this;
-      contentEl.empty();
-    }
-  }
-
-  open() {
-    return new Promise((resolve) => {
-      this.callback = resolve;
-      this.preventClose = true; // Reset preventClose flag before opening
-      super.open();
-    });
-  }
-}
-
-class PasswordPromptSettingsTab extends PluginSettingTab {
-  plugin: PasswordPromptPlugin;
-
-  constructor(app: App, plugin: PasswordPromptPlugin) {
+  constructor(app: App, plugin: ObsidianLockPlugin) {
     super(app, plugin);
     this.plugin = plugin;
   }
@@ -123,24 +129,37 @@ class PasswordPromptSettingsTab extends PluginSettingTab {
 
     containerEl.empty();
 
+    containerEl.createEl('h2', { text: 'Obsidian Lock Settings' });
+
     new Setting(containerEl)
-      .setName('Enable Password')
-      .setDesc('Toggle password protection for the vault.')
+      .setName('Enable lock screen')
+      .setDesc('Show the lock screen when Obsidian starts up.')
       .addToggle((toggle) =>
         toggle
-          .setValue(this.plugin.settings.enablePassword)
+          .setValue(this.plugin.settings.enableLockScreen)
           .onChange(async (value) => {
-            this.plugin.settings.enablePassword = value;
+            this.plugin.settings.enableLockScreen = value;
+            await this.plugin.saveSettings();
+          })
+      );
+
+    new Setting(containerEl)
+      .setName('Username')
+      .setDesc('The username to display on the lock screen.')
+      .addText((text) =>
+        text
+          .setValue(this.plugin.settings.username)
+          .onChange(async (value) => {
+            this.plugin.settings.username = value;
             await this.plugin.saveSettings();
           })
       );
 
     new Setting(containerEl)
       .setName('Password')
-      .setDesc('Enter the password to access the vault.')
+      .setDesc('The password to unlock the vault.')
       .addText((text) =>
         text
-          .setPlaceholder('Enter password')
           .setValue(this.plugin.settings.password)
           .onChange(async (value) => {
             this.plugin.settings.password = value;

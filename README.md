@@ -1,11 +1,12 @@
 # Locksidian
 
-Locksidian is an add-on for the Obsidian note-taking app that adds a password prompt when entering your vault. You can find my blog post on it [here](https://uthvah.substack.com/p/locksidian-enhancing-note-security).
+Locksidian is an add-on for the Obsidian note-taking app that adds a lock screen when entering your vault. You can find my blog post on it [here](https://uthvah.substack.com/p/locksidian-enhancing-note-security).
 
 **This plugin does NOT add local file protection**
 
 
-![image](https://github.com/SineCrepusculum/locksidian/assets/113909005/c840478f-1de6-4d5e-b257-02e1b40c261d)
+![image](https://github.com/SineCrepusculum/locksidian/assets/113909005/96fde450-51d0-4475-9d7d-b22af91823df)
+
 
 ## Installation
 
@@ -27,11 +28,11 @@ Locksidian is an add-on for the Obsidian note-taking app that adds a password pr
 
 ## Configuration
 
-Currently, Locksidian uses a hardcoded password ('password123') for demonstration purposes. To change the password:
+Currently, Locksidian uses a hardcoded password ('password') for demonstration purposes. To change the password:
 
 1. Open the Obsidian settings for Locksidian
 2. Locate the 'Password' section
-3. Replace `'password123'` with your desired password.
+3. Replace `'password'` with your desired password.
 
 ## Development
 

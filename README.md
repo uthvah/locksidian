@@ -5,7 +5,7 @@ Locksidian is an add-on for the Obsidian note-taking app that adds a lock screen
 **This plugin does NOT add local file protection**
 
 
-![image](https://github.com/SineCrepusculum/locksidian/assets/113909005/96fde450-51d0-4475-9d7d-b22af91823df)
+![image](https://github.com/SineCrepusculum/locksidian/assets/113909005/a0d2bb91-66f7-42dc-9c89-b240c6c0d74a)
 
 
 ## Installation

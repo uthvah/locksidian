@@ -23,7 +23,7 @@ Locksidian is an add-on for the Obsidian note-taking app that adds a lock screen
 
 1. Upon launching Obsidian or opening a vault, Locksidian will display a password prompt.
 2. Enter the correct password to unlock access to the vault.
-3. If the password is incorrect, Locksidian will display an error message and prompt for the password again.
+3. If the password is incorrect, Locksidian will shake the input field to show access denied and prompt for the password again.
 4. Once the correct password is entered, the password prompt will be closed, and you can access your vault.
 
 ## Configuration

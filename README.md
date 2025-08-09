@@ -1,56 +1,77 @@
 # Locksidian
+<p align="center">
+<img alt="Locksidian lockscreen" src="https://github.com/user-attachments/assets/74bed28f-c472-4080-9344-fcd2b339f47e" />
+</p>
 
-Locksidian is an add-on for the Obsidian note-taking app that adds a lock screen when entering your vault. You can find my blog post on it [here](https://uthvah.substack.com/p/locksidian-enhancing-note-security).
-
-**This plugin does NOT add local file protection**
-
-
-![image](https://github.com/SineCrepusculum/locksidian/assets/113909005/a0d2bb91-66f7-42dc-9c89-b240c6c0d74a)
+<p align="center">
+<img alt="Version" src="https://img.shields.io/badge/version-7.3-blue.svg?cacheSeconds=2592000" />
+<img alt="License" src="https://img.shields.io/badge/license-MIT-green.svg" />
+</p>
 
 
-## Installation
+Locksidian is a secure, beautiful, and highly customizable lockscreen plugin for Obsidian. It protects your vault from unauthorized access with industry-standard encryption, while offering personalization features to match your unique workflow and style.
 
-1. Download the latest release of the Locksidian add-on from the [Releases](https://github.com/SineCrepusculum/locksidian/releases) page.
-2. In Obsidian, go to **Settings > Third-party Plugins**.
-3. Enable **Community Plugins** if you haven't already.
-4. Open the folder for community plugins.
-5. Create a new folder inside called `'locksidian'`
-6. Copy the 3 downloaded files into the folder.
-7. Restart Obsidian.
-8. Locksidian should now appear in the list of installed plugins in the Obsidian settings.
+This plugin is built with a security-first mindset, ensuring your sensitive notes remain private. It has been hardened for stability and performance, providing a seamless and reliable user experience.
 
-## Usage
+## ✨ Key Features
 
-1. Upon launching Obsidian or opening a vault, Locksidian will display a password prompt.
-2. Enter the correct password to unlock access to the vault.
-3. If the password is incorrect, Locksidian will shake the input field to show access denied and prompt for the password again.
-4. Once the correct password is entered, the password prompt will be closed, and you can access your vault.
+### 🔐 Unyielding Security
+- Strong Encryption: Utilizes AES-GCM, an authenticated encryption standard that provides both confidentiality and data integrity.
+- Resilient Key Derivation: Implements PBKDF2 with a high iteration count (250,000) and a secure random salt to protect your password against modern brute-force attacks.
+- Password Strength Meter: Integrated zxcvbn analysis gives you real-time, intelligent feedback to help you choose a strong and secure password.
 
-## Configuration
+### 🎨 Deep Personalization
+- Dynamic Backgrounds: Set a video, image, or solid color as your lockscreen background. Use the defaults, add from a web URL, or upload your own files.
+- Personalized Greeting: Display a custom username on the lockscreen with your choice of font, weight (bold), and style (italic).
+- UI Scaling & Sizing: Adjust the overall size of lockscreen elements and the width of the password input to perfectly fit your display and preference.
 
-Currently, Locksidian uses a hardcoded password ('password') for demonstration purposes. To change the password:
+### ⚙️ Robust Functionality
+- Optional Full Vault Encryption: For maximum security, enable the option to encrypt every .md file in your vault. Files are decrypted automatically upon unlock.
+- Performant Processing: Note encryption/decryption is performed in batches, preventing UI freezes even in vaults with thousands of notes.
+- Resilient Operation: A single corrupted note will not halt the entire decryption process, ensuring you can always access the rest of your vault.
+- Auto-Lock Timer: Automatically lock your vault after a configurable period of inactivity.
 
-1. Open the Obsidian settings for Locksidian
-2. Locate the 'Password' section
-3. Replace `'password'` with your desired password.
+## 🚀 Installation
+## From the Community Plugins Store (Not approved yet)
+1. Open Settings in Obsidian.
+2. Go to Community Plugins and make sure "Restricted mode" is off.
+3. Click Browse and search for "Locksidian".
+4. Click Install, and then click Enable.
+5. Open the Locksidian settings to set your master password!
 
-## Development
+## Manual Installation
+1. Download the latest main.js, manifest.json, and styles.css from the releases page.
+2. Download the latest zxcvbn.js and bg.mp4 from the main page.
+3. Navigate to your Obsidian vault's plugin folder: <YourVault>/.obsidian/plugins/.
+4. Create a new folder named locksidian.
+5. Place the five downloaded files inside this new folder.
+6. In Obsidian, go to Settings -> Community Plugins and enable "Locksidian".
 
-To build and modify the Locksidian code:
+## 📖 Getting Started
+- Set Your Password: After installing, go to the Locksidian settings tab. You will be prompted to create your master password.
+- Lock Your Vault:
+	- Click the Lock icon in the left ribbon.
+	- Use the command palette (Ctrl/Cmd + P) and run "Locksidian: Lock Vault".
+	- Wait for the auto-lock timer to expire (if enabled).
+- Customize: Head back to the Locksidian settings at any time (while unlocked) to change your password, configure the auto-lock timer, and customize your lockscreen.
 
-1. Clone this repository: `git clone https://github.com/SineCrepusculum/locksidian.git`.
-2. Navigate to the project directory: `cd locksidian`.
-3. Install the dependencies: `npm install`.
-4. Make the desired modifications to the code.
-5. Build the project: `npm run build`.
-6. The compiled `main.js` file will be generated in the `dist` directory.
-7. Follow the installation steps above to install the modified Locksidian add-on in Obsidian.
 
-## Contributing
+## ⚠️ CRITICAL: Read Before Enabling Note Encryption
 
-Contributions to Locksidian are welcome! If you find any bugs or have suggestions for improvements, please [open an issue](https://github.com/your-username/locksidian/issues) or submit a pull request.
+This plugin offers a powerful feature to Encrypt Notes on Disk. Before you enable this, you must understand and accept the following risks:
 
-## License
+FORGOTTEN PASSWORDS CANNOT BE RECOVERED.
+If you enable note encryption and forget your password, your notes will be PERMANENTLY AND IRREVOCABLY LOST. There is no "Forgot Password" feature. There is no backdoor. We cannot help you recover your files.
 
-This project is licensed under the [MIT License](LICENSE).
+ALWAYS BACK UP YOUR VAULT.
+This is critical for all users, but it is ESSENTIAL if you enable note encryption. Back up your vault before you enable this feature for the first time, and maintain regular backups. If anything goes wrong (e.g., file corruption, software bug), a backup is your only safeguard.
 
+This feature provides a very high level of security, but it comes with significant personal responsibility. Please proceed with extreme caution.
+
+## 🤝 Contributing
+
+This plugin is for the community. If you find a bug, have a feature request, or want to contribute to the code, please feel free to open an issue or pull request on the GitHub repository.
+
+## 📄 License
+
+This plugin is released under the MIT License. See the LICENSE file for more details.

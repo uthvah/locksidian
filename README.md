@@ -4,7 +4,7 @@
 </p>
 
 <p align="center">
-<img alt="Version" src="https://img.shields.io/badge/version-7.3-blue.svg?cacheSeconds=2592000" />
+<img alt="Version" src="https://img.shields.io/badge/version-2.1.0-blue.svg?cacheSeconds=2592000" />
 <img alt="License" src="https://img.shields.io/badge/license-MIT-green.svg" />
 </p>
 

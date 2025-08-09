@@ -1,10 +1,9 @@
 {
 	"id": "locksidian",
 	"name": "Locksidian",
-	"version": "1.0.0",
-	"minAppVersion": "0.15.0",
-	"description": "In-app password protection for your vault.",
-	"author": "Janus",
-	"authorUrl": "https://github.com/SineCrepusculum",
+	"version": "2.1.0",
+	"description": "A secure, beautiful, and minimalist lockscreen for Obsidian.",
+	"author": "Uthvah",
+	"authorUrl": "https://github.com/uthvah",
 	"isDesktopOnly": false
 }

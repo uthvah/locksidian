@@ -13,25 +13,25 @@ Locksidian is a secure, beautiful, and highly customizable lockscreen plugin for
 
 This plugin is built with a security-first mindset, ensuring your sensitive notes remain private. It has been hardened for stability and performance, providing a seamless and reliable user experience.
 
-## ✨ Key Features
+## Features
 
-### 🔐 Unyielding Security
+### Security
 - Strong Encryption: Utilizes AES-GCM, an authenticated encryption standard that provides both confidentiality and data integrity.
 - Resilient Key Derivation: Implements PBKDF2 with a high iteration count (250,000) and a secure random salt to protect your password against modern brute-force attacks.
 - Password Strength Meter: Integrated zxcvbn analysis gives you real-time, intelligent feedback to help you choose a strong and secure password.
 
-### 🎨 Deep Personalization
+### Personalization
 - Dynamic Backgrounds: Set a video, image, or solid color as your lockscreen background. Use the defaults, add from a web URL, or upload your own files.
 - Personalized Greeting: Display a custom username on the lockscreen with your choice of font, weight (bold), and style (italic).
 - UI Scaling & Sizing: Adjust the overall size of lockscreen elements and the width of the password input to perfectly fit your display and preference.
 
-### ⚙️ Robust Functionality
+### Functionality
 - Optional Full Vault Encryption: For maximum security, enable the option to encrypt every .md file in your vault. Files are decrypted automatically upon unlock.
 - Performant Processing: Note encryption/decryption is performed in batches, preventing UI freezes even in vaults with thousands of notes.
 - Resilient Operation: A single corrupted note will not halt the entire decryption process, ensuring you can always access the rest of your vault.
 - Auto-Lock Timer: Automatically lock your vault after a configurable period of inactivity.
 
-## 🚀 Installation
+## Installation
 ## From the Community Plugins Store (Not approved yet)
 1. Open Settings in Obsidian.
 2. Go to Community Plugins and make sure "Restricted mode" is off.
@@ -47,7 +47,7 @@ This plugin is built with a security-first mindset, ensuring your sensitive note
 5. Place the five downloaded files inside this new folder.
 6. In Obsidian, go to Settings -> Community Plugins and enable "Locksidian".
 
-## 📖 Getting Started
+## Getting Started
 - Set Your Password: After installing, go to the Locksidian settings tab. You will be prompted to create your master password.
 - Lock Your Vault:
 	- Click the Lock icon in the left ribbon.
@@ -68,10 +68,10 @@ This is critical for all users, but it is ESSENTIAL if you enable note encryptio
 
 This feature provides a very high level of security, but it comes with significant personal responsibility. Please proceed with extreme caution.
 
-## 🤝 Contributing
+## Contributing
 
 This plugin is for the community. If you find a bug, have a feature request, or want to contribute to the code, please feel free to open an issue or pull request on the GitHub repository.
 
-## 📄 License
+## License
 
 This plugin is released under the MIT License. See the LICENSE file for more details.
